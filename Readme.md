@@ -8,10 +8,6 @@ The platform enables brand strategists to monitor public sentiment, track topic 
 
 ## Architecture
 
-### Architecture Diagram
-
-![BDA Architecture](/assets/BDAmainArch.png)
-
 The architecture consists of several key components:
 
 - **Data Source**: Reddit API for streaming posts
