@@ -1,0 +1,9 @@
+praw
+python-dotenv
+kafka-python
+pyspark
+flask
+tensorflow==2.17.0
+nltk
+requests
+google-genai

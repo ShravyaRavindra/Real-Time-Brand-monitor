@@ -1,0 +1,10 @@
+praw
+python-dotenv
+kafka-python
+pyspark
+flask
+tensorflow
+nltk
+requests
+google-generativeai
+hdfs
