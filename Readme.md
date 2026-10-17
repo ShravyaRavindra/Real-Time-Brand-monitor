@@ -17,7 +17,6 @@ The architecture consists of several key components:
 - **Data Source**: Reddit API for streaming posts
 - **Message Broker**: Kafka for handling real-time data streams
 - **Processing Engine**: Spark for sentiment analysis and data transformations along with Built flask API
-- **Storage**: HDFS for persistent data storage
 - **Visualization**: React frontend with Express backend for real-time dashboards
 
 ## Project Working
@@ -49,14 +48,7 @@ The Real-time Brand Monitor Analysis Platform works through a sophisticated pipe
      - The above functions are rate-limited to 5 messages per batch and 1 second between API calls and are got from api calls to the sentiment-flask-app api container built using flask which consists of pre-built LSTM model from reddit data and Structured output LLM.
      - Then sends the Data for visualization into 2 Kafka topics: `realtime_data_apple` and `realtime_data_samsung`.
 
-4. **Data Storage**
-
-   - Processed results are stored in HDFS at `/user/project/storage`.
-   - The data is organized in Parquet format for efficient retrieval.
-   - The data stored in HDFS can be used for analysis and visualization at a later date.
-   - Checkpoint information is maintained at `/user/project/kafka_checkpoint` to ensure exactly-once processing.
-
-5. **Data Retrieval & Visualization**
+4. **Data Retrieval & Visualization**
    - The Express backend fetches processed data from the 2 Kafka topics.
    - 2 WebSockets are established between the Express backend and the React frontend each for each topic.
    - It exposes APIs for the frontend to consume.
@@ -102,13 +94,7 @@ The dashboard provides interactive visualizations of sentiment analysis results:
 git clone https://github.com/Keerthan04/Real-time-Brand-Monitor-Analysis-Platform
 ```
 
-### Step 2: Set Up Hadoop Docker Environment
-
-This project uses the hadoop-docker-compose setup for HDFS:
-Refer this link
-
-- <https://github.com/dhzdhd/hadoop-docker-compose>
-  and setup the hadoop cluster using docker compose in the hadoop-docker-compose folder (separate from this project folder)
+### Step 2: Set Docker Environment
 
 ```bash
 docker-compose up -d
@@ -194,7 +180,6 @@ Once running, access the dashboard at: [http://localhost:5173](http://localhost:
 To stop the services:
 
 - Use keyboard interrupts (Ctrl+C) to stop each running process
-  - Stop the Spark Streaming process
   - Stop the express backend and react frontend
   - Stop the `reddit_stream.py` process
 
@@ -209,10 +194,5 @@ To preserve the data collected for future analysis:
 When restarting the project after the initial setup:
 
 - Start the Docker containers
-- Recreate the HDFS directory structure
-- Restore previous data (optional)
-  - If previous data is needed then run `hdfs dfs -put /workdir/project_storage /user/project/storage`
 
-## Questions and Support
 
-For questions or support, please contact: <ckeerthankumar4@gmail.com>
